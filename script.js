@@ -1,4 +1,4 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwrSNjMaDqpuGVTrwllZfZbNwD8U6SZy2K1wjSxj4HN/exec';
+const scriptURL = 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Audiowide&family=Roboto&display=swap';
 
 document.getElementById('bookingForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
