@@ -48,6 +48,10 @@ h1 {
     display: inline-block;
 }
 
+.cta-button:hover {
+    background: #e60000;
+}
+
 .verification {
     padding: 2rem;
     text-align: center;
@@ -87,4 +91,13 @@ button {
     margin-top: 1rem;
     cursor: pointer;
     width: 100%;
+}
+
+button:hover {
+    background: #e60000;
+}
+
+.verification-result {
+    margin-top: 1rem;
+    font-size: 1.2rem;
 }
