@@ -2,33 +2,47 @@ const scriptURL = 'https://script.google.com/macros/s/AKfycbwrSNjMaDqpuGVTrwllZf
 
 // Form Submission
 document.getElementById('bookingForm')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const formData = {
-        name: e.target.name.value,
-        email: e.target.email.value,
-        phone: e.target.phone.value
-    };
+      e.preventDefault();
+      
+      const formData = {
+          name: e.target.name.value,
+          email: e.target.email.value,
+          phone: e.target.phone.value
+      };
 
-    try {
-        // Save to Google Sheets
-        const saveResponse = await fetch(scriptURL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        });
-        const saveData = await saveResponse.json();
-        
-        // Send email via Formspree
-        await fetch('https://formspree.io/f/mqaevnqz', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                ...formData,
-                serial: saveData.serial,
-                event: "ROCK ON CHITTAGONG 2025"
-            })
-        });
+      const submitButton = e.target.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Submitting...';
+
+      try {
+          // Save to Google Sheets
+          const saveResponse = await fetch(scriptURL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(formData)
+          });
+          const saveData = await saveResponse.json();
+          
+          // Send email via Formspree
+          await fetch('https://formspree.io/f/mqaevnqz', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  ...formData,
+                  serial: saveData.serial,
+                  event: "ROCK ON CHITTAGONG 2025"
+              })
+          });
+
+          alert(`Registration Successful! Your Serial Number: ${saveData.serial}`);
+          window.location.href = '/';
+      } catch (error) {
+          alert('Error submitting form! Please try again.');
+      } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Confirm Registration';
+      }
+  });
 
         alert(`Registration Successful! Your Serial Number: ${saveData.serial}`);
         window.location.href = '/';
