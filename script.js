@@ -1,5 +1,43 @@
-const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwrSNjMaDqpuGVTrwllZfZbNwD8U6SZy2K1wjSxj4HN/exec';
 
+// Form Submission
+document.getElementById('bookingForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = {
+        name: e.target.name.value,
+        email: e.target.email.value,
+        phone: e.target.phone.value
+    };
+
+    try {
+        // Save to Google Sheets
+        const saveResponse = await fetch(scriptURL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+        const saveData = await saveResponse.json();
+        
+        // Send email via Formspree
+        await fetch('https://formspree.io/f/mqaevnqz', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ...formData,
+                serial: saveData.serial,
+                event: "ROCK ON CHITTAGONG 2025"
+            })
+        });
+
+        alert(`Registration Successful! Your Serial Number: ${saveData.serial}`);
+        window.location.href = '/';
+    } catch (error) {
+        alert('Error submitting form! Please try again.');
+    }
+});
+
+// Ticket Verification
 async function checkTicket() {
     const serial = document.getElementById('serialNumber').value;
     const resultDiv = document.getElementById('verificationResult');
@@ -10,10 +48,10 @@ async function checkTicket() {
     }
 
     try {
-        const response = await fetch(`YOUR_VERIFICATION_SCRIPT_URL?serial=${serial}`);
+        const response = await fetch(`${scriptURL}?serial=${serial}`);
         const data = await response.json();
         
-        if(data.status === 'valid') {
+        if(data.valid) {
             resultDiv.innerHTML = `✅ Valid Ticket!<br>Name: ${data.name}<br>Email: ${data.email}`;
         } else {
             resultDiv.innerHTML = "❌ Invalid Ticket Number";
@@ -22,18 +60,3 @@ async function checkTicket() {
         resultDiv.innerHTML = "Error checking ticket. Please try again.";
     }
 }
-
-// Form submission handling
-document.getElementById('bookingForm')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData(e.target);
-    
-    try {
-        await fetch(scriptURL, { method: 'POST', body: formData });
-        alert('Registration Successful! You will receive confirmation via email.');
-        window.location.href = '/';
-    } catch (error) {
-        alert('Error submitting form! Please try again.');
-    }
-});
