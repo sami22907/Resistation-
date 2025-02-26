@@ -1,60 +1,32 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-    <!-- বর্তমান head কন্টেন্ট অপরিবর্তিত রাখুন -->
-    <!-- ... -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROCK ON CHITTAGONG 2025 | Free Ticket Booking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Audiowide&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- বর্তমান HTML স্ট্রাকচার অপরিবর্তিত রাখুন -->
-    <!-- ... -->
+    <header class="header">
+        <div class="logo">ECHO PLUSH</div>
+    </header>
 
-    <script>
-        const scriptURL = 'আপনার_ডিপ্লয়_করা_স্ক্রিপ্ট_URL'; // এখানে আপনার ডিপ্লয় করা স্ক্রিপ্টের URL দিন
+    <section class="hero">
+        <div>
+            <h1>April 13, 2025</h1>
+            <p>M.A. Aziz Stadium, Chittagong</p>
+            <a href="register.html" class="cta-button">GET FREE TICKET</a>
+        </div>
+    </section>
 
-        // ফর্ম সাবমিশনের আগের সমস্ত ফাংশন অপরিবর্তিত থাকবে
+    <div class="verification">
+        <h2>টিকিট যাচাই করুন</h2>
+        <input type="text" id="serialNumber" placeholder="সিরিয়াল নম্বর দিন">
+        <button onclick="checkTicket()">টিকিট চেক করুন</button>
+        <div class="verification-result" id="verificationResult"></div>
+    </div>
 
-        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData(e.target);
-            const formProps = Object.fromEntries(formData);
-            
-            try {
-                const response = await fetch(scriptURL, {
-                    method: 'POST',
-                    body: JSON.stringify(formProps),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                const result = await response.json();
-                if(result.status === 'success') {
-                    alert(`নিবন্ধন সফল হয়েছে! অনুগ্রহ করে ${formProps.email} চেক করুন নিশ্চিতকরণের জন্য`);
-                    closeModal();
-                }
-            } catch (error) {
-                alert('ফর্ম জমা দিতে সমস্যা হচ্ছে! অনুগ্রহ করে আবার চেষ্টা করুন।');
-            }
-        });
-
-        async function checkTicket() {
-            const serial = document.getElementById('serialNumber').value;
-            const resultDiv = document.getElementById('verificationResult');
-            
-            try {
-                const response = await fetch(`${scriptURL}?serial=${serial}`);
-                const data = await response.json();
-                
-                if(data.status === 'valid') {
-                    resultDiv.innerHTML = `✅ বৈধ টিকিট!<br>নাম: ${data.name}<br>ইমেইল: ${data.email}`;
-                } else {
-                    resultDiv.innerHTML = "❌ অবৈধ টিকিট নম্বর";
-                }
-            } catch (error) {
-                resultDiv.innerHTML = "টিকিট যাচাই করতে সমস্যা হচ্ছে। অনুগ্রহ করে আবার চেষ্টা করুন।";
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
