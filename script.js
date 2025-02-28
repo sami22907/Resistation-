@@ -1,5 +1,5 @@
 // Google Apps Script URL (আপনার স্ক্রিপ্ট URL দিয়ে প্রতিস্থাপন করুন)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwrSNjMaDqpuGVTrwllZfZbNwD8U6SZy2K1wjSxj4HN/dev';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxB_7lJvyYGtkOJHLxP1B3_xY9gBRdr_VXQ7zTzeJRPB7YwthjXLTXCLIQWOQdSFEcE/exec;
 
 // ফর্ম সাবমিশন হ্যান্ডলার
 document.getElementById('bookingForm')?.addEventListener('submit', async (e) => {
